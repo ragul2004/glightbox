@@ -1,8 +1,9 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (global = global || self, global.GLightbox = factory());
-}(this, (function () { 'use strict';
+    typeof define === 'function' && define.amd ? define(factory) :
+      (global = global || self, global.GLightbox = factory());
+}(this, (function () {
+  'use strict';
 
   function _typeof(obj) {
     "@babel/helpers - typeof";
@@ -18,6 +19,42 @@
     }
 
     return _typeof(obj);
+  }
+
+  function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) {
+    try {
+      var info = gen[key](arg);
+      var value = info.value;
+    } catch (error) {
+      reject(error);
+      return;
+    }
+
+    if (info.done) {
+      resolve(value);
+    } else {
+      Promise.resolve(value).then(_next, _throw);
+    }
+  }
+
+  function _asyncToGenerator(fn) {
+    return function () {
+      var self = this,
+        args = arguments;
+      return new Promise(function (resolve, reject) {
+        var gen = fn.apply(self, args);
+
+        function _next(value) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value);
+        }
+
+        function _throw(err) {
+          asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err);
+        }
+
+        _next(undefined);
+      });
+    };
   }
 
   function _classCallCheck(instance, Constructor) {
@@ -40,6 +77,135 @@
     if (protoProps) _defineProperties(Constructor.prototype, protoProps);
     if (staticProps) _defineProperties(Constructor, staticProps);
     return Constructor;
+  }
+
+  function _slicedToArray(arr, i) {
+    return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest();
+  }
+
+  function _toConsumableArray(arr) {
+    return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();
+  }
+
+  function _arrayWithoutHoles(arr) {
+    if (Array.isArray(arr)) return _arrayLikeToArray(arr);
+  }
+
+  function _arrayWithHoles(arr) {
+    if (Array.isArray(arr)) return arr;
+  }
+
+  function _iterableToArray(iter) {
+    if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);
+  }
+
+  function _iterableToArrayLimit(arr, i) {
+    if (typeof Symbol === "undefined" || !(Symbol.iterator in Object(arr))) return;
+    var _arr = [];
+    var _n = true;
+    var _d = false;
+    var _e = undefined;
+
+    try {
+      for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) {
+        _arr.push(_s.value);
+
+        if (i && _arr.length === i) break;
+      }
+    } catch (err) {
+      _d = true;
+      _e = err;
+    } finally {
+      try {
+        if (!_n && _i["return"] != null) _i["return"]();
+      } finally {
+        if (_d) throw _e;
+      }
+    }
+
+    return _arr;
+  }
+
+  function _unsupportedIterableToArray(o, minLen) {
+    if (!o) return;
+    if (typeof o === "string") return _arrayLikeToArray(o, minLen);
+    var n = Object.prototype.toString.call(o).slice(8, -1);
+    if (n === "Object" && o.constructor) n = o.constructor.name;
+    if (n === "Map" || n === "Set") return Array.from(o);
+    if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);
+  }
+
+  function _arrayLikeToArray(arr, len) {
+    if (len == null || len > arr.length) len = arr.length;
+
+    for (var i = 0, arr2 = new Array(len); i < len; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+
+  function _nonIterableSpread() {
+    throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _nonIterableRest() {
+    throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+  }
+
+  function _createForOfIteratorHelper(o, allowArrayLike) {
+    var it;
+
+    if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) {
+      if (Array.isArray(o) || (it = _unsupportedIterableToArray(o)) || allowArrayLike && o && typeof o.length === "number") {
+        if (it) o = it;
+        var i = 0;
+
+        var F = function () { };
+
+        return {
+          s: F,
+          n: function () {
+            if (i >= o.length) return {
+              done: true
+            };
+            return {
+              done: false,
+              value: o[i++]
+            };
+          },
+          e: function (e) {
+            throw e;
+          },
+          f: F
+        };
+      }
+
+      throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");
+    }
+
+    var normalCompletion = true,
+      didErr = false,
+      err;
+    return {
+      s: function () {
+        it = o[Symbol.iterator]();
+      },
+      n: function () {
+        var step = it.next();
+        normalCompletion = step.done;
+        return step;
+      },
+      e: function (e) {
+        didErr = true;
+        err = e;
+      },
+      f: function () {
+        try {
+          if (!normalCompletion && it.return != null) it.return();
+        } finally {
+          if (didErr) throw err;
+        }
+      }
+    };
   }
 
   var uid = Date.now();
@@ -88,7 +254,7 @@
 
     if (isArrayLike(collection) && !isObject(collection)) {
       var l = collection.length,
-          i = 0;
+        i = 0;
 
       for (; i < l; i++) {
         if (callback.call(collection[i], collection[i], i, collection) === false) {
@@ -129,14 +295,14 @@
   }
   function addEvent(eventName) {
     var _ref = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {},
-        onElement = _ref.onElement,
-        withCallback = _ref.withCallback,
-        _ref$avoidDuplicate = _ref.avoidDuplicate,
-        avoidDuplicate = _ref$avoidDuplicate === void 0 ? true : _ref$avoidDuplicate,
-        _ref$once = _ref.once,
-        once = _ref$once === void 0 ? false : _ref$once,
-        _ref$useCapture = _ref.useCapture,
-        useCapture = _ref$useCapture === void 0 ? false : _ref$useCapture;
+      onElement = _ref.onElement,
+      withCallback = _ref.withCallback,
+      _ref$avoidDuplicate = _ref.avoidDuplicate,
+      avoidDuplicate = _ref$avoidDuplicate === void 0 ? true : _ref$avoidDuplicate,
+      _ref$once = _ref.once,
+      once = _ref$once === void 0 ? false : _ref$once,
+      _ref$useCapture = _ref.useCapture,
+      useCapture = _ref$useCapture === void 0 ? false : _ref$useCapture;
 
     var thisArg = arguments.length > 2 ? arguments[2] : undefined;
     var element = onElement || [];
@@ -272,7 +438,7 @@
   }
   function createHTML(htmlStr) {
     var frag = document.createDocumentFragment(),
-        temp = document.createElement('div');
+      temp = document.createElement('div');
     temp.innerHTML = htmlStr;
 
     while (temp.firstChild) {
@@ -289,7 +455,7 @@
   }
   function whichAnimationEvent() {
     var t,
-        el = document.createElement('fakeelement');
+      el = document.createElement('fakeelement');
     var animations = {
       animation: 'animationend',
       OAnimation: 'oAnimationEnd',
@@ -305,7 +471,7 @@
   }
   function whichTransitionEvent() {
     var t,
-        el = document.createElement('fakeelement');
+      el = document.createElement('fakeelement');
     var transitions = {
       transition: 'transitionend',
       OTransition: 'oTransitionEnd',
@@ -321,9 +487,9 @@
   }
   function createIframe(config) {
     var url = config.url,
-        allow = config.allow,
-        callback = config.callback,
-        appendTo = config.appendTo;
+      allow = config.allow,
+      callback = config.callback,
+      appendTo = config.appendTo;
     var iframe = document.createElement('iframe');
     iframe.className = 'vimeo-video gvideo';
     iframe.src = url;
@@ -733,7 +899,7 @@
       this.zoom = 1;
       this.isDoubleTap = false;
 
-      var noop = function noop() {};
+      var noop = function noop() { };
 
       this.rotate = wrapFunc(this.element, option.rotate || noop);
       this.touchStart = wrapFunc(this.element, option.touchStart || noop);
@@ -799,7 +965,7 @@
         this.preTapPosition.y = this.y1;
         this.last = this.now;
         var preV = this.preV,
-            len = evt.touches.length;
+          len = evt.touches.length;
 
         if (len > 1) {
           this._cancelLongTap();
@@ -830,14 +996,14 @@
         }
 
         var preV = this.preV,
-            len = evt.touches.length,
-            currentX = evt.touches[0].pageX,
-            currentY = evt.touches[0].pageY;
+          len = evt.touches.length,
+          currentX = evt.touches[0].pageX,
+          currentY = evt.touches[0].pageY;
         this.isDoubleTap = false;
 
         if (len > 1) {
           var sCurrentX = evt.touches[1].pageX,
-              sCurrentY = evt.touches[1].pageY;
+            sCurrentY = evt.touches[1].pageY;
           var v = {
             x: evt.touches[1].pageX - currentX,
             y: evt.touches[1].pageY - currentY
@@ -872,7 +1038,7 @@
             evt.deltaX = currentX - this.x2;
             evt.deltaY = currentY - this.y2;
             var movedX = Math.abs(this.x1 - this.x2),
-                movedY = Math.abs(this.y1 - this.y2);
+              movedY = Math.abs(this.y1 - this.y2);
 
             if (movedX > 10 || movedY > 10) {
               this._preventTap = true;
@@ -1506,14 +1672,14 @@
       _classCallCheck(this, DragSlides);
 
       var dragEl = config.dragEl,
-          _config$toleranceX = config.toleranceX,
-          toleranceX = _config$toleranceX === void 0 ? 40 : _config$toleranceX,
-          _config$toleranceY = config.toleranceY,
-          toleranceY = _config$toleranceY === void 0 ? 65 : _config$toleranceY,
-          _config$slide = config.slide,
-          slide = _config$slide === void 0 ? null : _config$slide,
-          _config$instance = config.instance,
-          instance = _config$instance === void 0 ? null : _config$instance;
+        _config$toleranceX = config.toleranceX,
+        toleranceX = _config$toleranceX === void 0 ? 40 : _config$toleranceX,
+        _config$toleranceY = config.toleranceY,
+        toleranceY = _config$toleranceY === void 0 ? 65 : _config$toleranceY,
+        _config$slide = config.slide,
+        slide = _config$slide === void 0 ? null : _config$slide,
+        _config$instance = config.instance,
+        instance = _config$instance === void 0 ? null : _config$instance;
       this.el = dragEl;
       this.active = false;
       this.dragging = false;
@@ -2688,15 +2854,16 @@
             trigger: slide.node,
             player: null
           };
-          this.trigger('slide_before_load', slideData);
-          slide.instance.setContent(slideNode, function () {
-            hide(_this2.loader);
+          this.trigger('slide_before_load', slideData).then(function () {
+            slide.instance.setContent(slideNode, function () {
+              hide(_this2.loader);
 
-            _this2.resize();
+              _this2.resize();
 
-            _this2.slideAnimateIn(slideNode, first);
+              _this2.slideAnimateIn(slideNode, first);
 
-            _this2.trigger('slide_after_load', slideData);
+              _this2.trigger('slide_after_load', slideData);
+            });
           });
         }
 
@@ -3628,32 +3795,100 @@
       }
     }, {
       key: "trigger",
-      value: function trigger(eventName) {
-        var _this9 = this;
+      value: function () {
+        var _trigger = _asyncToGenerator(regeneratorRuntime.mark(function _callee(eventName) {
+          var _this9 = this;
 
-        var data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
-        var onceTriggered = [];
+          var data,
+            onceTriggered,
+            _iterator,
+            _step,
+            _step$value,
+            i,
+            event,
+            evt,
+            once,
+            callback,
+            _args = arguments;
 
-        each(this.apiEvents, function (event, i) {
-          var evt = event.evt,
-              once = event.once,
-              callback = event.callback;
+          return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+              switch (_context.prev = _context.next) {
+                case 0:
+                  data = _args.length > 1 && _args[1] !== undefined ? _args[1] : null;
+                  onceTriggered = [];
+                  _iterator = _createForOfIteratorHelper(this.apiEvents.entries());
+                  _context.prev = 3;
 
-          if (evt == eventName) {
-            callback(data);
+                  _iterator.s();
 
-            if (once) {
-              onceTriggered.push(i);
+                case 5:
+                  if ((_step = _iterator.n()).done) {
+                    _context.next = 16;
+                    break;
+                  }
+
+                  _step$value = _slicedToArray(_step.value, 2), i = _step$value[0], event = _step$value[1];
+                  evt = event.evt, once = event.once, callback = event.callback;
+
+                  if (!(evt == eventName)) {
+                    _context.next = 14;
+                    break;
+                  }
+
+                  console.log(data);
+                  _context.next = 12;
+                  return callback(data);
+
+                case 12:
+                  console.log(data);
+
+                  if (once) {
+                    onceTriggered.push(i);
+                  }
+
+                case 14:
+                  _context.next = 5;
+                  break;
+
+                case 16:
+                  _context.next = 21;
+                  break;
+
+                case 18:
+                  _context.prev = 18;
+                  _context.t0 = _context["catch"](3);
+
+                  _iterator.e(_context.t0);
+
+                case 21:
+                  _context.prev = 21;
+
+                  _iterator.f();
+
+                  return _context.finish(21);
+
+                case 24:
+                  if (onceTriggered.length) {
+                    each(onceTriggered, function (i) {
+                      return _this9.apiEvents.splice(i, 1);
+                    });
+                  }
+
+                case 25:
+                case "end":
+                  return _context.stop();
+              }
             }
-          }
-        });
+          }, _callee, this, [[3, 18, 21, 24]]);
+        }));
 
-        if (onceTriggered.length) {
-          each(onceTriggered, function (i) {
-            return _this9.apiEvents.splice(i, 1);
-          });
+        function trigger(_x) {
+          return _trigger.apply(this, arguments);
         }
-      }
+
+        return trigger;
+      }()
     }, {
       key: "clearAllEvents",
       value: function clearAllEvents() {
@@ -3669,7 +3904,7 @@
     return GlightboxInit;
   }();
 
-  function glightbox () {
+  function glightbox() {
     var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
     var instance = new GlightboxInit(options);
     instance.init();

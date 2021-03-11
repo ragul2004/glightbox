@@ -273,14 +273,16 @@ class GlightboxInit {
                 player: null
             };
 
-            this.trigger('slide_before_load', slideData);
+            this.trigger('slide_before_load', slideData).then(() => {
+                slide.instance.setContent(slideNode, () => {
+                    _.hide(this.loader);
+                    this.resize();
+                    this.slideAnimateIn(slideNode, first);
+                    this.trigger('slide_after_load', slideData);
+                });
+            }); 
 
-            slide.instance.setContent(slideNode, () => {
-                _.hide(this.loader);
-                this.resize();
-                this.slideAnimateIn(slideNode, first);
-                this.trigger('slide_after_load', slideData);
-            });
+         
         }
 
         this.slideDescription = slideNode.querySelector('.gslide-description');
@@ -1286,17 +1288,21 @@ class GlightboxInit {
      *
      * @param string eventName
      */
-    trigger(eventName, data = null) {
+    async trigger(eventName, data = null) {
         const onceTriggered = [];
-        _.each(this.apiEvents, (event, i) => {
+        for (const [i, event] of this.apiEvents.entries()) {
             const { evt, once, callback } = event;
             if (evt == eventName) {
-                callback(data);
+                console.log(data);
+                await callback(data);
+                console.log(data);
+               
                 if (once) {
                     onceTriggered.push(i);
                 }
             }
-        });
+
+        }
         if (onceTriggered.length) {
             _.each(onceTriggered, (i) => this.apiEvents.splice(i, 1));
         }
